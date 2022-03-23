@@ -3,6 +3,7 @@
 	"Description": "Various ui and client changes to fix bugs and add better support for mods",
 	"Version": "1.5.0",
 	"LoadPriority": 0,
+	"SupportsVanilla": true,
 	"ConVars": [
 		{
 			"Name": "filter_hide_empty",

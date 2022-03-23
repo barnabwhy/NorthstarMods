@@ -427,10 +427,12 @@ void function UpdatePlayButton( var button )
 				{
 					if ( NSIsModEnabled( modName ) && NSIsModRequiredOnClient( modName ) )
 					{
+						print(modName)
 						hasNonVanillaMods = true
 						break
 					}
 				}
+				print(hasNonVanillaMods)
 
 				if ( hasNonVanillaMods )
 					file.mpButtonActivateFunc = null
@@ -443,6 +445,11 @@ void function UpdatePlayButton( var button )
 				thread TryUnlockNorthstarButton()
 			else
 				Hud_SetLocked( button, isLocked )
+
+			if(NSIsSupportingVanilla() && button == file.mpButton ) {
+				file.mpButtonActivateFunc = LaunchMP
+				Hud_SetLocked( button, false )
+			}
 		#endif
 
 		if ( Script_IsRunningTrialVersion() && !IsTrialPeriodActive() && file.mpButtonActivateFunc != LaunchGamePurchase )
@@ -507,6 +514,7 @@ void function MainMenuButton_Activate( var button )
 
 void function TryUnlockNorthstarButton()
 {
+	if(NSIsSupportingVanilla()) return
 	// unlock "Launch Northstar" button until you're authed with masterserver, are allowing insecure auth, or 7.5 seconds have passed
 	float time = Time()
 
@@ -552,12 +560,12 @@ void function TryAuthWithLocalServer()
 		}
 		WaitFrame()
 	}
-	
+
 	if ( NSWasAuthSuccessful() )
 	{
 		NSCompleteAuthWithLocalServer()
 	}
-	
+
 	if ( GetConVarString( "mp_gamemode" ) == "solo" )
 		SetConVarString( "mp_gamemode", "tdm" )
 

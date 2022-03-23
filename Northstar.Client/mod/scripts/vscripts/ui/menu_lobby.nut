@@ -234,10 +234,10 @@ void function SetupComboButtonTest( var menu )
 	int headerIndex = 0
 	int buttonIndex = 0
 	file.playHeader = AddComboButtonHeader( comboStruct, headerIndex, "#MENU_HEADER_PLAY" )
-	
-	bool isModded = IsNorthstarServer()
-	
-	
+
+	bool isModded = !NSIsSupportingVanilla() && IsNorthstarServer()
+
+
 	// this will be the server browser
 	if ( isModded )
 	{
@@ -262,12 +262,12 @@ void function SetupComboButtonTest( var menu )
 	else
 	{
 		file.inviteRoomButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#MENU_TITLE_INVITE_ROOM" )
-		Hud_AddEventHandler( file.inviteRoomButton, UIE_CLICK, DoRoomInviteIfAllowed )	
+		Hud_AddEventHandler( file.inviteRoomButton, UIE_CLICK, DoRoomInviteIfAllowed )
 	}
 
 	file.inviteFriendsButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#MENU_TITLE_INVITE_FRIENDS" )
 	Hud_AddEventHandler( file.inviteFriendsButton, UIE_CLICK, InviteFriendsIfAllowed )
-	
+
 	if ( isModded )
 	{
 		Hud_SetEnabled( file.inviteFriendsButton, false )
@@ -1248,7 +1248,7 @@ function UpdateLobbyUI()
 		if ( IsStoreMenu( uiGlobal.menuToOpenFromPromoButton ) )
 		{
 			string menuName = expect string( uiGlobal.menuToOpenFromPromoButton._name )
-			
+
 			void functionref() preOpenfunc = null
 			if ( uiGlobal.menuToOpenFromPromoButton == GetMenu( "StoreMenu_WeaponSkins" ) ) // Hardcoded special case for now
 				preOpenfunc = DefaultToDLC11WeaponWarpaintBundle
